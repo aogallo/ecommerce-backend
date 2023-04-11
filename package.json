@@ -8,7 +8,10 @@
     "compile": "tsc",
     "start": "yarn run compile && node ./dist/index.js",
     "dev": "ts-node src/index.ts",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "format": "prettier --write . ",
+    "lint": "eslint --fix ./src --ext .ts,.json",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@apollo/server": "^4.6.0",
@@ -16,8 +19,9 @@
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "@typescript-eslint/eslint-plugin": "^5.43.0",
-    "eslint": "^8.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "^8.38.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",

@@ -1,5 +1,5 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import { ApolloServer } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone'
 
 const typeDefs = `
   type Book {
@@ -15,31 +15,29 @@ const typeDefs = `
 
 const books = [
   {
-    title: "The awakeining",
+    title: 'The awakeining',
     author: 'Kate Chopin',
-    new: true
+    new: true,
   },
   {
-    title: "City of Glass",
+    title: 'City of Glass',
     author: 'Paul Auster',
-    new: false
+    new: false,
   },
 ]
-
 
 const resolvers = {
   Query: {
     books: () => books,
-  }
+  },
 }
-
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
 })
-
 
 const { url } = await startStandaloneServer(server, { listen: { port: 4000 } })
 
+// eslint-disable-next-line no-console
 console.log(`Server listening at: ${url} 🐳`)
