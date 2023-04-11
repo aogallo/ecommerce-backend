@@ -6,3 +6,5 @@ yarn.lock
 .prettierrc.json
 README.md
 tsconfig.json
+babel*.json
+*-backup.json
