@@ -18,10 +18,13 @@
       "module-resolver",
       {
         "alias": {
-          "@resolvers": "./src/resolvers"
+          "@resolvers": "./src/resolvers",
+          "@graphqlTypes": "./src/graphqlTypes"
         }
       }
     ]
   ],
-  "ignore": ["./src/**/*.spec.ts"]
+  "ignore": [
+    "./src/**/*.spec.ts"
+  ]
 }
