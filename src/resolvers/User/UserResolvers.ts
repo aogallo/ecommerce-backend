@@ -1,6 +1,7 @@
+import { type Resolvers } from 'src/generated/graphql'
 import getUserById from './queries/getUserById'
 
-const UserResolvers = {
+const UserResolvers: Resolvers = {
   Query: {
     getUserById,
   },
