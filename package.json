@@ -10,12 +10,10 @@
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules src/index.ts",
     "devnode": "nodemon ./src/index.ts",
     "watch": "tsc -w",
-    "format": "prettier --write . ",
+    "format": "prettier --write . && git add .",
     "lint": "eslint --fix ./src --ext .ts,.json",
     "prepare": "husky install",
-    "codegen": "graphql-codegen --config codegen.yaml",
-    "prestart": "yarn generate",
-    "predev": "yarn generate"
+    "codegen": "graphql-codegen --config codegen.yaml"
   },
   "dependencies": {
     "@apollo/server": "^4.6.0",
@@ -26,6 +24,8 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "graphql": "^16.6.0",
+    "graphql-middleware": "^6.1.33",
+    "graphql-shield": "^7.6.5",
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
@@ -37,8 +37,12 @@
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.4",
     "@graphql-codegen/cli": "3.3.0",
+    "@graphql-codegen/typescript": "3.0.3",
+    "@graphql-codegen/typescript-mongodb": "2.4.6",
+    "@graphql-codegen/typescript-resolvers": "3.2.0",
     "@graphql-eslint/eslint-plugin": "^3.18.0",
     "@tsconfig/node16": "^1.0.3",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.11",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "babel-plugin-module-resolver": "^5.0.0",
@@ -55,10 +59,7 @@
     "prettier": "^2.8.7",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "*",
-    "@graphql-codegen/typescript-resolvers": "3.2.0",
-    "@graphql-codegen/typescript": "3.0.3",
-    "@graphql-codegen/typescript-mongodb": "2.4.6"
+    "typescript": "*"
   },
   "ava": {
     "extensions": {

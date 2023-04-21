@@ -1,9 +1,7 @@
-import { type GraphQLResolveInfo } from 'graphql'
-
-import { ObjectId } from 'mongodb'
+import { GraphQLResolveInfo } from 'graphql'
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
-export type Exact<T extends Record<string, unknown>> = {
+export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
@@ -12,8 +10,11 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>
 }
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
+  [P in K]-?: NonNullable<T[P]>
+}
 /** All built-in and custom scalars, mapped to their actual values */
-export interface Scalars {
+export type Scalars = {
   ID: string
   String: string
   Boolean: boolean
@@ -21,12 +22,22 @@ export interface Scalars {
   Float: number
 }
 
-export interface Query {
+export type Mutation = {
+  __typename?: 'Mutation'
+  login?: Maybe<Scalars['String']>
+}
+
+export type MutationLoginArgs = {
+  password: Scalars['String']
+  username: Scalars['String']
+}
+
+export type Query = {
   __typename?: 'Query'
   getUserById: UserResponse
 }
 
-export interface User {
+export type User = {
   __typename?: 'User'
   email?: Maybe<Scalars['String']>
   id?: Maybe<Scalars['ID']>
@@ -34,21 +45,21 @@ export interface User {
   username?: Maybe<Scalars['String']>
 }
 
-export interface UserResponse {
+export type UserResponse = {
   __typename?: 'UserResponse'
   email?: Maybe<Scalars['String']>
   id?: Maybe<Scalars['ID']>
   username?: Maybe<Scalars['String']>
 }
 
-export interface AdditionalEntityFields {
+export type AdditionalEntityFields = {
   path?: InputMaybe<Scalars['String']>
   type?: InputMaybe<Scalars['String']>
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
 
-export interface ResolverWithResolve<TResult, TParent, TContext, TArgs> {
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>
 }
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
@@ -152,10 +163,11 @@ export type DirectiveResolverFn<
 ) => TResult | Promise<TResult>
 
 /** Mapping between all available schema types and the resolvers types */
-export interface ResolversTypes {
+export type ResolversTypes = {
+  Mutation: ResolverTypeWrapper<{}>
+  String: ResolverTypeWrapper<Scalars['String']>
   Query: ResolverTypeWrapper<{}>
   User: ResolverTypeWrapper<User>
-  String: ResolverTypeWrapper<Scalars['String']>
   ID: ResolverTypeWrapper<Scalars['ID']>
   UserResponse: ResolverTypeWrapper<UserResponse>
   AdditionalEntityFields: AdditionalEntityFields
@@ -163,17 +175,18 @@ export interface ResolversTypes {
 }
 
 /** Mapping between all available schema types and the resolvers parents */
-export interface ResolversParentTypes {
+export type ResolversParentTypes = {
+  Mutation: {}
+  String: Scalars['String']
   Query: {}
   User: User
-  String: Scalars['String']
   ID: Scalars['ID']
   UserResponse: UserResponse
   AdditionalEntityFields: AdditionalEntityFields
   Boolean: Scalars['Boolean']
 }
 
-export interface UnionDirectiveArgs {
+export type UnionDirectiveArgs = {
   discriminatorField?: Maybe<Scalars['String']>
   additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>
 }
@@ -185,7 +198,7 @@ export type UnionDirectiveResolver<
   Args = UnionDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface AbstractEntityDirectiveArgs {
+export type AbstractEntityDirectiveArgs = {
   discriminatorField: Scalars['String']
   additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>
 }
@@ -197,7 +210,7 @@ export type AbstractEntityDirectiveResolver<
   Args = AbstractEntityDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface EntityDirectiveArgs {
+export type EntityDirectiveArgs = {
   embedded?: Maybe<Scalars['Boolean']>
   additionalFields?: Maybe<Array<Maybe<AdditionalEntityFields>>>
 }
@@ -209,7 +222,7 @@ export type EntityDirectiveResolver<
   Args = EntityDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface ColumnDirectiveArgs {
+export type ColumnDirectiveArgs = {
   overrideType?: Maybe<Scalars['String']>
 }
 
@@ -220,7 +233,7 @@ export type ColumnDirectiveResolver<
   Args = ColumnDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface IdDirectiveArgs {}
+export type IdDirectiveArgs = {}
 
 export type IdDirectiveResolver<
   Result,
@@ -229,7 +242,7 @@ export type IdDirectiveResolver<
   Args = IdDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface LinkDirectiveArgs {
+export type LinkDirectiveArgs = {
   overrideType?: Maybe<Scalars['String']>
 }
 
@@ -240,7 +253,7 @@ export type LinkDirectiveResolver<
   Args = LinkDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface EmbeddedDirectiveArgs {}
+export type EmbeddedDirectiveArgs = {}
 
 export type EmbeddedDirectiveResolver<
   Result,
@@ -249,7 +262,7 @@ export type EmbeddedDirectiveResolver<
   Args = EmbeddedDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface MapDirectiveArgs {
+export type MapDirectiveArgs = {
   path: Scalars['String']
 }
 
@@ -260,10 +273,22 @@ export type MapDirectiveResolver<
   Args = MapDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
-export interface QueryResolvers<
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
+> = {
+  login?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationLoginArgs, 'password' | 'username'>
+  >
+}
+
+export type QueryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
-> {
+> = {
   getUserById?: Resolver<
     ResolversTypes['UserResponse'],
     ParentType,
@@ -271,10 +296,10 @@ export interface QueryResolvers<
   >
 }
 
-export interface UserResolvers<
+export type UserResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
-> {
+> = {
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
@@ -282,23 +307,24 @@ export interface UserResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
-export interface UserResponseResolvers<
+export type UserResponseResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['UserResponse'] = ResolversParentTypes['UserResponse'],
-> {
+> = {
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
-export interface Resolvers<ContextType = any> {
+export type Resolvers<ContextType = any> = {
+  Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
   User?: UserResolvers<ContextType>
   UserResponse?: UserResponseResolvers<ContextType>
 }
 
-export interface DirectiveResolvers<ContextType = any> {
+export type DirectiveResolvers<ContextType = any> = {
   union?: UnionDirectiveResolver<any, any, ContextType>
   abstractEntity?: AbstractEntityDirectiveResolver<any, any, ContextType>
   entity?: EntityDirectiveResolver<any, any, ContextType>
@@ -308,3 +334,5 @@ export interface DirectiveResolvers<ContextType = any> {
   embedded?: EmbeddedDirectiveResolver<any, any, ContextType>
   map?: MapDirectiveResolver<any, any, ContextType>
 }
+
+import { ObjectId } from 'mongodb'

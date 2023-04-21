@@ -7,8 +7,6 @@ const resolversArray = loadFilesSync(join(__dirname, './**/*Resolvers.ts'), {
   extensions: ['ts'],
 })
 
-console.log('inde', resolversArray)
-
 const resolvers = mergeResolvers(resolversArray)
 
 export default resolvers

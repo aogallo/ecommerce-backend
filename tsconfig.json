@@ -15,6 +15,9 @@
       ],
       "@graphqlTypes/*": [
         "./src/graphqlTypes/*"
+      ],
+      "@permissions/*": [
+        "./src/permissions/*"
       ]
     },
     "types": [
