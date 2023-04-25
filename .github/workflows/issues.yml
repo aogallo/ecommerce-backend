@@ -10,7 +10,7 @@ jobs:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@v1
         with:
-          assignees: ${{ secret.DEFAULT_ASSIGNEE }}
+          assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
           allowSelfAssign: true
 
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."

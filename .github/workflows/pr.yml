@@ -11,4 +11,4 @@ jobs:
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
-          assignees: ${{ secret.DEFAULT_ASSIGNEE }}
+          assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
