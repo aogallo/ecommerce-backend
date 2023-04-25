@@ -1,6 +1,6 @@
 name: Issue assignment
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on:
+on: 
   issues:
     types: [opened]
 
@@ -9,6 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Auto-assign issue'
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: aogallo
+          numOfAssignee: 1
+          allowSelfAssign: true
+
+
+      - name: 'Auto-assign PR'
         uses: pozil/auto-assign-issue@v1
         with:
           assignees: aogallo
