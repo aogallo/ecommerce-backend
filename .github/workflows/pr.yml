@@ -11,4 +11,4 @@ jobs:
       - name: 'Auto-assign PR'
         uses: pozil/auto-assign-issue@v1
         with:
-          allowSelfAssign: true
+          assignees: aogallo
