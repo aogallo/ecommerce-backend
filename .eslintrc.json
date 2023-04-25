@@ -7,24 +7,62 @@
     "standard-with-typescript",
     "plugin:prettier/recommended",
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier"
+    "plugin:@typescript-eslint/recommended"
   ],
   "plugins": [
     "@typescript-eslint",
     "import",
     "prettier"
   ],
-  "overrides": [],
+  "overrides": [
+    {
+      "files": [
+        "*.graphql"
+      ],
+      "parser": "@graphql-eslint/eslint-plugin",
+      "plugins": [
+        "@graphql-eslint"
+      ],
+      "rules": {
+        "@graphql-elsint/known-type-names": "error"
+      },
+      "parserOptions": {
+        "schema": "./src/graphqlTypes/**/*.graphql"
+      }
+    }
+  ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "rules": {
-    "prettier/prettier": "error",
-    "import/no-unresolved": [
-      "error"
-    ]
+    "prettier/prettier": "error"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": true,
+      "node": true,
+      "alias": {
+        "extensions": [
+          ".js",
+          ".ts"
+        ],
+        "map": [
+          [
+            "@resolvers",
+            "./src/resolvers"
+          ],
+          [
+            "@graphqlTypes",
+            "./src/graphqlTypes"
+          ],
+          [
+            "@permissions",
+            "./src/permissions"
+          ]
+        ]
+      }
+    }
   }
 }

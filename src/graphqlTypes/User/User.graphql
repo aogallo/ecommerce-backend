@@ -1,0 +1,16 @@
+type User {
+  id: ID
+  email: String
+  username: String
+  password: String
+}
+
+type UserResponse {
+  id: ID
+  email: String
+  username: String
+}
+
+type Query {
+  getUserById: UserResponse!
+}
