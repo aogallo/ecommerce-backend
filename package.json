@@ -3,26 +3,77 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
+    "build": "babel src --source-maps inline --extensions \".ts\" --out-dir dist --copy-files ",
     "compile": "tsc",
-    "start": "yarn run compile && node ./dist/index.js",
-    "dev": "tsc -w"
+    "start": "node ./dist/index.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules src/index.ts",
+    "devnode": "nodemon ./src/index.ts",
+    "watch": "tsc -w",
+    "format": "prettier --write . && git add .",
+    "lint": "eslint --fix ./src --ext .ts,.json",
+    "prepare": "husky install",
+    "codegen": "graphql-codegen --config codegen.yaml"
   },
   "dependencies": {
     "@apollo/server": "^4.6.0",
-    "graphql": "^16.6.0"
+    "@graphql-tools/load-files": "^6.6.1",
+    "@graphql-tools/merge": "^8.4.0",
+    "@graphql-tools/schema": "^9.0.17",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "graphql-middleware": "^6.1.33",
+    "graphql-shield": "^7.6.5",
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/node": "^7.20.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.21.2",
+    "@babel/plugin-transform-typescript": "^7.21.3",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.4",
+    "@graphql-codegen/cli": "3.3.0",
+    "@graphql-codegen/typescript": "3.0.3",
+    "@graphql-codegen/typescript-mongodb": "2.4.6",
+    "@graphql-codegen/typescript-resolvers": "3.2.0",
+    "@graphql-eslint/eslint-plugin": "^3.18.0",
+    "@tsconfig/node16": "^1.0.3",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.11",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
-    "eslint-plugin-import": "^2.25.2",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^8.0.3",
+    "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "*"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nonSemVerExperiments": {
+      "configurableModuleFormat": true
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm"
+    ]
+  },
+  "exports": {
+    "import": "./index.js",
+    "require": "./index.cjs"
   }
 }

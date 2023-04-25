@@ -1,0 +1,30 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        },
+        "modules": "commonjs"
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-typescript",
+    "@babel/plugin-transform-modules-commonjs",
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@resolvers": "./src/resolvers",
+          "@graphqlTypes": "./src/graphqlTypes"
+        }
+      }
+    ]
+  ],
+  "ignore": [
+    "./src/**/*.spec.ts"
+  ]
+}
