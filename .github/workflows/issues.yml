@@ -4,12 +4,13 @@ on:
     types: [opened]
 
 jobs:
-  auto-assign:
+  auto-assign-issue:
     runs-on: ubuntu-latest
     steps:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@v1
         with:
+          repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
           assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
           allowSelfAssign: true
 

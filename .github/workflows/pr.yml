@@ -3,12 +3,25 @@ on:
   pull_request:
     types:
       - opened
+
+env:
+  GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+
 jobs:
-  auto-assign:
+  auto-assign-pr:
     runs-on: ubuntu-latest
     steps:
       - name: 'Auto-assign PR'
         uses: pozil/auto-assign-issue@v1
         with:
-          repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
           assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
+
+  assign-project-pr:
+    runs-on: ubuntu-latest
+    name: Assign to Ecommerce Project
+    steps:
+      - name: Assign NEW pull request to the Ecommerce Project
+        uses: srggrs/assign-one-project-github-action@1.2.1
+        if: github.event.action == 'opened'
+        with:
+          project: 'https://github.com/users/aogallo/projects/2'
