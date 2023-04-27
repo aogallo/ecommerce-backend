@@ -1,9 +1,11 @@
-import { type IncomingMessage } from 'http'
-import jwt, { type JwtPayload } from 'jsonwebtoken'
 import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
 import { applyMiddleware } from 'graphql-middleware'
 import { makeExecutableSchema } from '@graphql-tools/schema'
+
+import { type IncomingMessage } from 'http'
+import jwt, { type JwtPayload } from 'jsonwebtoken'
+import dotenv from 'dotenv'
 
 import resolvers from '@resolvers/index'
 import typeDefs from '@graphqlTypes/index'
@@ -26,6 +28,8 @@ interface MyContext {
   user?: string
 }
 
+dotenv.config()
+
 const server = new ApolloServer<MyContext>({
   schema: applyMiddleware(
     makeExecutableSchema({
@@ -40,13 +44,15 @@ const getUser = (req: IncomingMessage): UserToken | null => {
   try {
     const tokenWithBearer = req.headers.authorization ?? ''
     const token = tokenWithBearer.split(' ')[1]
+    const JWT_SECRET_VALUE: jwt.Secret = process.env.JWT_SECRET as string
+
     if (token === '') {
       return null
     }
 
     const verifyToken: jwt.JwtPayload = jwt.verify(
       token,
-      'SUPER_SECRET',
+      JWT_SECRET_VALUE,
     ) as JwtPayload
 
     const { userInfo, iat, exp, sub } = verifyToken
