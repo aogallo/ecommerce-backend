@@ -20,15 +20,7 @@ export const login = (
   parent: string,
   { username, password }: LoginInput,
 ): string => {
-  const userAtuh = {
-    id: '12345',
-    name: 'Gene Kranz',
-    email: 'gene@nasa.gov',
-    username: 'gene',
-    password: 'password123!',
-    roles: ['director'],
-    permissions: ['read:any_user', 'read:own_user'],
-  }
+  const userAtuh = users.filter((user) => user.username === username)[0]
 
   return jwt.sign(
     {

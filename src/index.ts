@@ -60,7 +60,7 @@ const getUser = (req: IncomingMessage): UserToken | null => {
     }
 
     return {
-      userInfo,
+      ...userInfo,
       iat: iat as number,
       exp,
       sub: sub as string,
