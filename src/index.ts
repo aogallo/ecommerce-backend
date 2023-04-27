@@ -25,7 +25,7 @@ interface UserToken {
 }
 
 interface MyContext {
-  user?: string
+  user?: Omit<UserToken, 'userInfo'> & UserInformation
 }
 
 dotenv.config()
