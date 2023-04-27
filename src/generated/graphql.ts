@@ -24,7 +24,13 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  createUser?: Maybe<UserResponse>
   login?: Maybe<Scalars['String']>
+}
+
+export type MutationCreateUserArgs = {
+  password?: InputMaybe<Scalars['String']>
+  username?: InputMaybe<Scalars['String']>
 }
 
 export type MutationLoginArgs = {
@@ -277,6 +283,12 @@ export type MutationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
+  createUser?: Resolver<
+    Maybe<ResolversTypes['UserResponse']>,
+    ParentType,
+    ContextType,
+    Partial<MutationCreateUserArgs>
+  >
   login?: Resolver<
     Maybe<ResolversTypes['String']>,
     ParentType,

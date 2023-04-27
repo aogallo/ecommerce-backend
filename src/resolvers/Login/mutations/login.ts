@@ -6,29 +6,15 @@ interface LoginInput {
   password: string
 }
 
-interface Users {
-  id: string
-  name: string
-  email: string
-  username: string
-  password: string
-  roles: string[]
-  permissions: string[]
-}
-
 export const login = (
-  parent: string,
+  _parent: string,
   { username, password }: LoginInput,
 ): string => {
-  const userAtuh = {
-    id: '12345',
-    name: 'Gene Kranz',
-    email: 'gene@nasa.gov',
-    username: 'gene',
-    password: 'password123!',
-    roles: ['director'],
-    permissions: ['read:any_user', 'read:own_user'],
-  }
+  const JWT_SECRET_VALUE: jwt.Secret = process.env.JWT_SECRET as string
+  const JWT_ALGORITHM_VALUE: jwt.Algorithm = process.env
+    .JWT_ALGORITHM as jwt.Algorithm
+  const JWT_EXPIRATION_IN: string = process.env.JWT_EXPIRATION_IN as string
+  const userAtuh = users.filter((user) => user.username === username)[0]
 
   return jwt.sign(
     {
@@ -37,8 +23,12 @@ export const login = (
         permissions: userAtuh.permissions,
       },
     },
-    'SUPER_SECRET',
-    { algorithm: 'HS256', subject: userAtuh.id, expiresIn: '1d' },
+    JWT_SECRET_VALUE,
+    {
+      algorithm: JWT_ALGORITHM_VALUE,
+      subject: userAtuh.id,
+      expiresIn: JWT_EXPIRATION_IN,
+    },
   )
 }
 
