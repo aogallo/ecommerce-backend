@@ -6,16 +6,6 @@ interface LoginInput {
   password: string
 }
 
-interface Users {
-  id: string
-  name: string
-  email: string
-  username: string
-  password: string
-  roles: string[]
-  permissions: string[]
-}
-
 export const login = (
   parent: string,
   { username, password }: LoginInput,
