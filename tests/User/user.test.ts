@@ -1,5 +1,3 @@
-import { MyContext, server } from '../../src/server'
-
 import resolvers from '@resolvers/index'
 import typeDefs from '@graphqlTypes/index'
 import { ApolloServer } from '@apollo/server'
@@ -23,7 +21,7 @@ interface ContextValue {
 }
 
 describe('User unit test', () => {
-  test('', async () => {
+  test('Retrieve User by Id', async () => {
     const testServer = new ApolloServer<ContextValue>({
       typeDefs,
       resolvers,

@@ -1,6 +1,7 @@
 {
   "extends": "ts-node/node16/tsconfig.json",
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "target": "es2021",
     "lib": [
@@ -10,9 +11,6 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "@src/*": [
-        "./src/*"
-      ],
       "@resolvers/*": [
         "./src/resolvers/*"
       ],
@@ -21,10 +19,14 @@
       ],
       "@permissions/*": [
         "./src/permissions/*"
-      ]
+      ],
+      "@src/*": [
+        "./src/*"
+      ],
     },
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "typeRoots": [
       "./node_modules/@types"
@@ -38,7 +40,8 @@
     "strictNullChecks": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "tests/**/*.test.ts"
   ],
   "exclude": [
     "node_modules",
