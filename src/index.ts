@@ -1,46 +1,13 @@
-import { ApolloServer } from '@apollo/server'
 import { startStandaloneServer } from '@apollo/server/standalone'
-import { applyMiddleware } from 'graphql-middleware'
-import { makeExecutableSchema } from '@graphql-tools/schema'
 
 import { type IncomingMessage } from 'http'
 import jwt, { type JwtPayload } from 'jsonwebtoken'
 import dotenv from 'dotenv'
-
-import resolvers from '@resolvers/index'
-import typeDefs from '@graphqlTypes/index'
-
-import { permissions } from '@permissions/permissions'
-
-interface UserInformation {
-  roles: string[]
-  permissions: string[]
-}
-
-interface UserToken {
-  userInfo: UserInformation
-  iat: number
-  exp: number
-  sub: string
-}
-
-interface MyContext {
-  user?: Omit<UserToken, 'userInfo'> & UserInformation
-}
+import { type UserToken, server } from './server'
 
 dotenv.config()
 
-const server = new ApolloServer<MyContext>({
-  schema: applyMiddleware(
-    makeExecutableSchema({
-      typeDefs,
-      resolvers,
-    }),
-    permissions,
-  ),
-})
-
-const getUser = (req: IncomingMessage): UserToken | null => {
+export const getUser = (req: IncomingMessage): UserToken | null => {
   try {
     const tokenWithBearer = req.headers.authorization ?? ''
     const token = tokenWithBearer.split(' ')[1]

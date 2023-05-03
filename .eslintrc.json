@@ -60,6 +60,10 @@
           [
             "@permissions",
             "./src/permissions"
+          ],
+          [
+            "@src",
+            "./src"
           ]
         ]
       }

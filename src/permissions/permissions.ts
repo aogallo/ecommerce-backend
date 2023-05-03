@@ -1,7 +1,7 @@
 import { rule, shield } from 'graphql-shield'
 
 const isAuthenticated = rule({ cache: 'contextual' })(async (_, __, ctx) => {
-  console.info('is authenticated middleware', ctx.user)
+  console.info('test use is authenticated middleware', ctx.user)
   return ctx.user !== null
 })
 

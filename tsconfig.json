@@ -6,10 +6,13 @@
     "lib": [
       "es2021"
     ],
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
+      "@src/*": [
+        "./src/*"
+      ],
       "@resolvers/*": [
         "./src/resolvers/*"
       ],

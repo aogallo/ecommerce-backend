@@ -4,10 +4,13 @@ interface UserInput {
   email: string
 }
 
-const getUserById = (): UserInput => ({
-  id: '111',
-  username: 'aogallo',
-  email: 'test@gmail.com',
-})
+const getUserById = (_parent: any, args: any, ctx: any): UserInput => {
+  console.log(ctx)
+  return {
+    id: '111',
+    username: 'aogallo',
+    email: 'test@gmail.com',
+  }
+}
 
 export default getUserById
