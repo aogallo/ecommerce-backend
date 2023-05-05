@@ -1,7 +1,8 @@
 {
   "env": {
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "standard-with-typescript",
@@ -60,6 +61,10 @@
           [
             "@permissions",
             "./src/permissions"
+          ],
+          [
+            "@src",
+            "./src"
           ]
         ]
       }

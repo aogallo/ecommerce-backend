@@ -1,18 +1,20 @@
 name: Issue assignment
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   issues:
     types: [opened]
 
+env:
+  GITHUB_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+
 jobs:
-  auto-assign:
+  auto-assign-issue:
     runs-on: ubuntu-latest
     steps:
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@v1
         with:
-          assignees: aogallo
-          numOfAssignee: 1
+          repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+          assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
           allowSelfAssign: true
 
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -26,3 +28,13 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+
+  assign-project-issue:
+    runs-on: ubuntu-latest
+    name: Assign to Ecommerce Project
+    steps:
+      - name: Assign NEW issue to the Ecommerce Project
+        uses: srggrs/assign-one-project-github-action@1.2.1
+        if: github.event.action == 'opened'
+        with:
+          project: 'https://github.com/users/aogallo/projects/2'

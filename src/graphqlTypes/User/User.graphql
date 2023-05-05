@@ -14,3 +14,7 @@ type UserResponse {
 type Query {
   getUserById: UserResponse!
 }
+
+type Mutation {
+  createUser(username: String, password: String): UserResponse
+}

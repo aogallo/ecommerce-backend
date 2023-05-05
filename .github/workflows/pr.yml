@@ -1,15 +1,27 @@
 name: PR assignment
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   pull_request:
     types:
       - opened
+
+env:
+  MY_PERSONAL_ACCESS_TOKEN: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+
 jobs:
-  auto-assign:
+  auto-assign-pr:
     runs-on: ubuntu-latest
     steps:
       - name: 'Auto-assign PR'
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
-          assignees: aogallo
+          assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
+
+  assign-project-pr:
+    runs-on: ubuntu-latest
+    name: Assign to Ecommerce Project
+    steps:
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/users/aogallo/projects/2
+          github-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
