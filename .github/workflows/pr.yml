@@ -21,8 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Assign to Ecommerce Project
     steps:
-      - name: Assign NEW pull request to the Ecommerce Project
-        uses: srggrs/assign-one-project-github-action@1.2.1
-        if: github.event.action == 'opened'
+      - uses: actions/add-to-project@RELEASE_VERSION
         with:
-          project: 'https://github.com/users/aogallo/projects/2'
+          project-url: https://github.com/users/aogallo/projects/2
+          github-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
