@@ -2,11 +2,15 @@ import resolvers from '@resolvers/index'
 import typeDefs from '@graphqlTypes/index'
 import { ApolloServer } from '@apollo/server'
 
+let testServer: ApolloServer<ContextValue>
+
 beforeAll(() => {
-  const testServer = new ApolloServer<ContextValue>({
+  testServer = new ApolloServer<ContextValue>({
     typeDefs,
     resolvers,
   })
+
+  return testServer
 })
 // afterAll(() => console.log('1 - afterAll'))
 // beforeEach(() => console.log('1 - beforeEach'))
@@ -25,22 +29,15 @@ interface ContextValue {
 
 describe('Login mutation tests', () => {
   test('LogIn the application', async () => {
-    const testServer = new ApolloServer<ContextValue>({
-      typeDefs,
-      resolvers,
-    })
     const response = await testServer.executeOperation({
-      query: 'query Query { getUserById { id email username } }',
+      query:
+        'mutation Login($username: String!, $password: String!) { login(username: $username, password: $password) }',
+      variables: {
+        username: '',
+        password: '',
+      },
     })
 
-    console.log(response.body.singleResult.data?.getUserById)
-
-    expect(response.body.singleResult.errors).toBeUndefined()
-
-    expect(response.body.singleResult.data?.getUserById).toEqual({
-      id: '111',
-      email: 'test@gmail.com',
-      username: 'aogallo',
-    })
+    expect(response.body.singleResult.data.login).toBe('')
   })
 })

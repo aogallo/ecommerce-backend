@@ -31,7 +31,7 @@ describe('User unit test', () => {
       query: 'query Query { getUserById { id email username } }',
     })
 
-    console.log(response.body.singleResult.data?.getUserById)
+    // console.log(response.body.singleResult.data?.getUserById)
 
     expect(response.body.singleResult.errors).toBeUndefined()
 
