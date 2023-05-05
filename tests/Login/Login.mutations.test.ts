@@ -28,16 +28,18 @@ interface ContextValue {
 }
 
 describe('Login mutation tests', () => {
-  test('LogIn the application', async () => {
-    const response = await testServer.executeOperation({
-      query:
-        'mutation Login($username: String!, $password: String!) { login(username: $username, password: $password) }',
-      variables: {
-        username: '',
-        password: '',
-      },
-    })
+  describe('LogIn the application', () => {
+    test('Empty username and password', async () => {
+      const response = await testServer.executeOperation({
+        query:
+          'mutation Login($username: String!, $password: String!) { login(username: $username, password: $password) }',
+        variables: {
+          username: '',
+          password: '',
+        },
+      })
 
-    expect(response.body.singleResult.data.login).toBe('')
+      expect(response.body.singleResult.data.login).toBe('')
+    })
   })
 })
