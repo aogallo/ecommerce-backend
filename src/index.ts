@@ -1,10 +1,14 @@
+import 'reflect-metadata'
 import { startStandaloneServer } from '@apollo/server/standalone'
 
 import { type IncomingMessage } from 'http'
 import jwt, { type JwtPayload } from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { type UserToken, server } from './server'
-
+import { type UserToken, createSchema } from './server'
+import { connectToMongodb } from './dataSources/mongo'
+import { useContainer } from 'typeorm'
+import { Container } from 'typedi'
+useContainer(Container)
 dotenv.config()
 
 export const getUser = (req: IncomingMessage): UserToken | null => {
@@ -43,14 +47,21 @@ export const getUser = (req: IncomingMessage): UserToken | null => {
   }
 }
 
-startStandaloneServer(server, {
-  listen: { port: 4000 },
-  context: async ({ req }) => ({
-    user: getUser(req),
-  }),
-})
-  .then(({ url }) => {
-    console.log(`Server listening at: ${url} 🐳`)
+async function main(): Promise<void> {
+  await connectToMongodb()
+  const server = await createSchema()
+
+  await startStandaloneServer(server, {
+    listen: { port: 4000 },
+    context: async ({ req }) => ({
+      user: getUser(req),
+    }),
+  })
+}
+
+main()
+  .then(() => {
+    console.log(`Server listening at: 🐳`)
   })
   .catch(() => {
     console.log(`Error in servers`)

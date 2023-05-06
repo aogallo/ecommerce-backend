@@ -19,9 +19,9 @@
       {
         "alias": {
           "@resolvers": "./src/resolvers",
-          "@graphqlTypes": "./src/graphqlTypes",
           "@src": "./src",
-          "@permissions": "./src/permissions"
+          "@permissions": "./src/permissions",
+          "@entities": "./src/entities"
         }
       }
     ]

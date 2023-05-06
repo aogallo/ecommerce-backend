@@ -1,10 +1,14 @@
-import resolvers from '@resolvers/index'
-import typeDefs from '@graphqlTypes/index'
 import { ApolloServer } from '@apollo/server'
+import { buildTypeDefsAndResolvers, ResolversMap } from 'type-graphql'
+import { join } from 'path'
 
 let testServer: ApolloServer<ContextValue>
 
-beforeAll(() => {
+beforeAll(async () => {
+  const { typeDefs, resolvers } = await buildTypeDefsAndResolvers({
+    resolvers: [join(__dirname, '../../src/resolvers/**/**Resolvers.{ts,js}')],
+  })
+
   testServer = new ApolloServer<ContextValue>({
     typeDefs,
     resolvers,

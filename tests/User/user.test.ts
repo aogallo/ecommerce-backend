@@ -1,7 +1,11 @@
-import resolvers from '@resolvers/index'
-import typeDefs from '@graphqlTypes/index'
+// import resolvers from '@resolvers/index'
+// import typeDefs from '@graphqlTypes/index'
+import { buildTypeDefsAndResolvers } from 'type-graphql'
 import { ApolloServer } from '@apollo/server'
+import { join } from 'path'
+import { makeExecutableSchema } from 'graphql-tools'
 
+// const schema = makeExecutableSchema({ typeDefs, resolvers });
 // beforeAll(() => {
 //   console.log('1 - beforeAll')
 // })
@@ -22,6 +26,12 @@ interface ContextValue {
 
 describe('User unit test', () => {
   test('Retrieve User by Id', async () => {
+    const { typeDefs, resolvers } = await buildTypeDefsAndResolvers({
+      resolvers: [
+        join(__dirname, '../../src/resolvers/**/**Resolvers.{ts,js}'),
+      ],
+    })
+
     const testServer = new ApolloServer<ContextValue>({
       typeDefs,
       resolvers,
@@ -30,8 +40,6 @@ describe('User unit test', () => {
     const response = await testServer.executeOperation({
       query: 'query Query { getUserById { id email username } }',
     })
-
-    // console.log(response.body.singleResult.data?.getUserById)
 
     expect(response.body.singleResult.errors).toBeUndefined()
 
