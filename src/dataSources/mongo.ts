@@ -1,10 +1,12 @@
 import path from 'path'
 
-import { createConnection, useContainer } from 'typeorm'
+import { useContainer, createConnection } from 'typeorm'
+import { Container } from 'typeorm-typedi-extensions'
 
-import { Container } from 'typedi'
+export default async function connectToMongodb(): Promise<void> {
+  console.log('process.env.MONGO_URI', process.env.MONGO_URI)
+  useContainer(Container)
 
-export async function connectToMongodb(): Promise<void> {
   await createConnection({
     type: 'mongodb',
     url: process.env.MONGO_URI ?? '',
@@ -14,3 +16,13 @@ export async function connectToMongodb(): Promise<void> {
   })
   console.log('Connected to mongodb')
 }
+
+// const mongoDataSource = new DataSource({
+//   type: 'mongodb',
+//   url: process.env.MONGO_URI ?? '',
+//   synchronize: true,
+//   logging: true,
+//   entities: [path.join(__dirname, '../entities/**/**.ts')],
+// })
+
+// export default mongoDataSource

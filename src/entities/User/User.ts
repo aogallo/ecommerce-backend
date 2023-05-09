@@ -6,7 +6,6 @@ import {
   Entity,
   ObjectId,
   ObjectIdColumn,
-  BaseEntity,
 } from 'typeorm'
 
 @ObjectType()
@@ -17,7 +16,7 @@ export class User {
   id!: ObjectId
 
   @Field()
-  @Column()
+  @Column('text', { unique: true })
   username!: string
 
   @Field()
@@ -25,7 +24,7 @@ export class User {
   name!: string
 
   @Field()
-  @Column()
+  @Column('text', { unique: true })
   email!: string
 
   @Column()
@@ -38,11 +37,4 @@ export class User {
   @Field()
   @UpdateDateColumn({ type: 'datetime' })
   updateAt!: string
-
-  // constructor(username: string, name: string, email: string, password: string) {
-  //   this.password = password
-  //   this.name = name
-  //   this.email = email
-  //   this.username = username
-  // }
 }

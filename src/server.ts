@@ -6,9 +6,7 @@ import { buildTypeDefsAndResolvers } from 'type-graphql'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { Container } from 'typedi'
 
-import { useContainer } from 'typeorm'
 import { permissions } from '@permissions/permissions'
-import { connectToMongodb } from './dataSources/mongo'
 
 interface UserInformation {
   roles: string[]
@@ -42,7 +40,6 @@ export const createSchema = async (): Promise<ApolloServer<MyContext>> => {
       makeExecutableSchema({ typeDefs, resolvers }),
       permissions,
     ),
-    // schema,
   })
 
   return server

@@ -1,4 +1,4 @@
-import { not, rule, shield, allow } from 'graphql-shield'
+import { rule, shield, allow, or } from 'graphql-shield'
 
 const isAuthenticated = rule({ cache: 'contextual' })(async (_, __, ctx) => {
   console.info(
@@ -8,8 +8,7 @@ const isAuthenticated = rule({ cache: 'contextual' })(async (_, __, ctx) => {
     ctx.user !== null,
   )
 
-  // return ctx.user !== null
-  return true
+  return ctx.user !== null
 })
 
 const isAdmin = rule({ cache: 'contextual' })(async (_, __, ctx) => {
@@ -20,8 +19,7 @@ const isAdmin = rule({ cache: 'contextual' })(async (_, __, ctx) => {
 export const permissions = shield(
   {
     Query: {
-      // getUserById: isAuthenticated,
-      user: isAuthenticated,
+      user: or(isAuthenticated, isAdmin),
     },
     Mutation: {
       createUser: allow,
@@ -29,7 +27,6 @@ export const permissions = shield(
   },
   {
     allowExternalErrors: true,
-    // debug: process.env.NODE_ENV !== 'production' ? true : false,
-    debug: true,
+    debug: process.env.NODE_ENV !== 'production',
   },
 )

@@ -5,10 +5,8 @@ import { type IncomingMessage } from 'http'
 import jwt, { type JwtPayload } from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { type UserToken, createSchema } from './server'
-import { connectToMongodb } from './dataSources/mongo'
-import { useContainer } from 'typeorm'
-import { Container } from 'typedi'
-useContainer(Container)
+import connectToMongodb from './dataSources/mongo'
+
 dotenv.config()
 
 export const getUser = (req: IncomingMessage): UserToken | null => {
@@ -61,8 +59,11 @@ async function main(): Promise<void> {
 
 main()
   .then(() => {
-    console.log(`Server listening at: 🐳`)
+    console.info(`Server listening at: https://localhost:4000 🐳`)
   })
-  .catch(() => {
-    console.log(`Error in servers`)
+  .catch((error) => {
+    console.error('Error to create the server')
+    console.error(error)
   })
+
+export default main

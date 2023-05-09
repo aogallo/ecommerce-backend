@@ -4,7 +4,7 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "current"
+          "node": "current",
         },
         "modules": "commonjs"
       }
@@ -24,7 +24,20 @@
           "@entities": "./src/entities"
         }
       }
-    ]
+    ],
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "version": "legacy"
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    "babel-plugin-parameter-decorator"
   ],
   "ignore": [
     "./src/**/*.spec.ts"

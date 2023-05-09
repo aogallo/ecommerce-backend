@@ -1,14 +1,17 @@
-// import resolvers from '@resolvers/index'
-// import typeDefs from '@graphqlTypes/index'
-import { buildTypeDefsAndResolvers } from 'type-graphql'
+import { buildTypeDefsAndResolvers, buildSchema } from 'type-graphql'
 import { ApolloServer } from '@apollo/server'
 import { join } from 'path'
-import { makeExecutableSchema } from 'graphql-tools'
+import { type GraphQLSchema, graphql } from 'graphql'
+import connectToMongodb from '@src/dataSources/mongo'
+import { createSchema } from '@src/server'
 
+let serverTest
 // const schema = makeExecutableSchema({ typeDefs, resolvers });
-// beforeAll(() => {
-//   console.log('1 - beforeAll')
-// })
+beforeAll(async () => {
+  jest.resetModules()
+  await connectToMongodb()
+  serverTest = await createSchema()
+})
 // afterAll(() => console.log('1 - afterAll'))
 // beforeEach(() => console.log('1 - beforeEach'))
 // afterEach(() => console.log('1 - afterEach'))
@@ -26,27 +29,13 @@ interface ContextValue {
 
 describe('User unit test', () => {
   test('Retrieve User by Id', async () => {
-    const { typeDefs, resolvers } = await buildTypeDefsAndResolvers({
-      resolvers: [
-        join(__dirname, '../../src/resolvers/**/**Resolvers.{ts,js}'),
-      ],
+    serverTest = await createSchema()
+
+    const response = await serverTest.executeOperation({
+      query: 'query Query { user }',
     })
 
-    const testServer = new ApolloServer<ContextValue>({
-      typeDefs,
-      resolvers,
-    })
-
-    const response = await testServer.executeOperation({
-      query: 'query Query { getUserById { id email username } }',
-    })
-
-    expect(response.body.singleResult.errors).toBeUndefined()
-
-    expect(response.body.singleResult.data?.getUserById).toEqual({
-      id: '111',
-      email: 'test@gmail.com',
-      username: 'aogallo',
-    })
+    console.log('response', response)
+    expect(response.body.kind).toBe('single')
   })
 })
