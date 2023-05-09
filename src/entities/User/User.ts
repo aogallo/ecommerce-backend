@@ -1,19 +1,20 @@
+import { ObjectIdScalar } from '@src/utils/customScalarIDType'
 import { Field, ID, ObjectType } from 'type-graphql'
 import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  Entity,
   ObjectId,
+  Entity,
   ObjectIdColumn,
 } from 'typeorm'
 
-@ObjectType()
 @Entity()
+@ObjectType()
 export class User {
   @Field((type) => ID)
   @ObjectIdColumn()
-  id!: ObjectId
+  readonly id!: ObjectId
 
   @Field()
   @Column('text', { unique: true })

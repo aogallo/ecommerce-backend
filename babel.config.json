@@ -4,7 +4,7 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "current",
+          "node": "current"
         },
         "modules": "commonjs"
       }
@@ -14,30 +14,31 @@
   "plugins": [
     "@babel/plugin-transform-typescript",
     "@babel/plugin-transform-modules-commonjs",
-    [
-      "module-resolver",
-      {
-        "alias": {
-          "@resolvers": "./src/resolvers",
-          "@src": "./src",
-          "@permissions": "./src/permissions",
-          "@entities": "./src/entities"
-        }
-      }
-    ],
+    "babel-plugin-transform-typescript-metadata",
     [
       "@babel/plugin-proposal-decorators",
       {
-        "version": "legacy"
+        "legacy": true
       }
     ],
+    "babel-plugin-parameter-decorator",
     [
       "@babel/plugin-proposal-class-properties",
       {
         "loose": true
       }
     ],
-    "babel-plugin-parameter-decorator"
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@resolvers": "./src/resolvers",
+          "@entities": "./src/entities",
+          "@src": "./src",
+          "@permissions": "./src/permissions"
+        }
+      }
+    ]
   ],
   "ignore": [
     "./src/**/*.spec.ts"
