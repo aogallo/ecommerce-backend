@@ -1,19 +1,12 @@
 {
   "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "node": "current"
-        },
-        "modules": "commonjs"
-      }
-    ],
+    "@babel/preset-env",
     "@babel/preset-typescript"
   ],
+  "ignore": [
+    "./src/**/*.spec.ts"
+  ],
   "plugins": [
-    "@babel/plugin-transform-typescript",
-    "@babel/plugin-transform-modules-commonjs",
     "babel-plugin-transform-typescript-metadata",
     [
       "@babel/plugin-proposal-decorators",
@@ -21,11 +14,10 @@
         "legacy": true
       }
     ],
-    "babel-plugin-parameter-decorator",
     [
       "@babel/plugin-proposal-class-properties",
       {
-        "loose": true
+        "loose": false
       }
     ],
     [
@@ -40,7 +32,4 @@
       }
     ]
   ],
-  "ignore": [
-    "./src/**/*.spec.ts"
-  ]
 }

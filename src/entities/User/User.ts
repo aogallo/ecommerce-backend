@@ -9,8 +9,8 @@ import {
   ObjectIdColumn,
 } from 'typeorm'
 
-@Entity()
 @ObjectType()
+@Entity()
 export class User {
   @Field((type) => ID)
   @ObjectIdColumn()

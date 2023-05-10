@@ -33,10 +33,6 @@ export const createSchema = async (): Promise<ApolloServer<MyContext>> => {
     validate: { forbidUnknownValues: false },
     container: Container,
   })
-  // const schema = await buildSchema({
-  //   resolvers: [join(__dirname, '/resolvers/**/**Resolvers.{ts,js}')],
-  //   validate: { forbidUnknownValues: false },
-  // })
 
   const server = new ApolloServer<MyContext>({
     schema: applyMiddleware(
