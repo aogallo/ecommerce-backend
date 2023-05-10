@@ -7,8 +7,6 @@ import { makeExecutableSchema } from '@graphql-tools/schema'
 import { Container } from 'typedi'
 
 import { permissions } from '@permissions/permissions'
-import { ObjectId } from 'mongodb'
-import { ObjectIdScalar } from './utils/customScalarIDType'
 
 interface UserInformation {
   roles: string[]
@@ -28,7 +26,6 @@ export interface MyContext {
 
 export const createSchema = async (): Promise<ApolloServer<MyContext>> => {
   const { typeDefs, resolvers } = await buildTypeDefsAndResolvers({
-    scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
     resolvers: [join(__dirname, '/resolvers/**/**Resolvers.{ts,js}')],
     validate: { forbidUnknownValues: false },
     container: Container,

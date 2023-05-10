@@ -4,6 +4,9 @@ import { type JestConfigWithTsJest, pathsToModuleNameMapper } from 'ts-jest'
 
 const jestConfig: JestConfigWithTsJest = {
   detectOpenHandles: true,
+  collectCoverage: true,
+  coveragePathIgnorePatterns: ['/node_modules/'],
+  coverageProvider: 'v8',
   // extensionsToTreatAsEsm: ['.ts'],
   // modulePaths: [compilerOptions.baseUrl],
   // moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),

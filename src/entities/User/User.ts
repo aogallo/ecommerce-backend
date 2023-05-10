@@ -1,4 +1,3 @@
-import { ObjectIdScalar } from '@src/utils/customScalarIDType'
 import { Field, ID, ObjectType } from 'type-graphql'
 import {
   Column,
