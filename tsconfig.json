@@ -1,29 +1,28 @@
 {
   "extends": "ts-node/node16/tsconfig.json",
   "compilerOptions": {
-    "noEmit": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "commonjs",
     "target": "es2021",
     "lib": [
-      "es2021"
+      "es2021",
+      "esnext.asynciterable"
     ],
-    // "rootDir": "./src",
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
       "@resolvers/*": [
         "./src/resolvers/*"
       ],
-      "@graphqlTypes/*": [
-        "./src/graphqlTypes/*"
-      ],
       "@permissions/*": [
         "./src/permissions/*"
       ],
+      "@entities/*": [
+        "./src/entities/*"
+      ],
       "@src/*": [
         "./src/*"
-      ],
+      ]
     },
     "types": [
       "node",
@@ -32,16 +31,25 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
     "outDir": "./dist",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
     "strict": true,
     "skipLibCheck": true,
-    "strictNullChecks": true
+    // "strictPropertyInitialization": false,
+    "strictNullChecks": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
+    ".eslintrc.json",
     "src/**/*.ts",
+    "babel.config.json",
+    "jest.config.ts",
     "tests/**/*.test.ts"
   ],
   "exclude": [

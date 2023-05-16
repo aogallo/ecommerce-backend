@@ -1,32 +1,35 @@
 {
   "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "node": "current"
-        },
-        "modules": "commonjs"
-      }
-    ],
+    "@babel/preset-env",
     "@babel/preset-typescript"
   ],
+  "ignore": [
+    "./src/**/*.spec.ts"
+  ],
   "plugins": [
-    "@babel/plugin-transform-typescript",
-    "@babel/plugin-transform-modules-commonjs",
+    "babel-plugin-transform-typescript-metadata",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": false
+      }
+    ],
     [
       "module-resolver",
       {
         "alias": {
           "@resolvers": "./src/resolvers",
-          "@graphqlTypes": "./src/graphqlTypes",
+          "@entities": "./src/entities",
           "@src": "./src",
           "@permissions": "./src/permissions"
         }
       }
     ]
   ],
-  "ignore": [
-    "./src/**/*.spec.ts"
-  ]
 }

@@ -1,7 +1,13 @@
-import { rule, shield } from 'graphql-shield'
+import { rule, shield, allow, or } from 'graphql-shield'
 
 const isAuthenticated = rule({ cache: 'contextual' })(async (_, __, ctx) => {
-  console.info('test use is authenticated middleware', ctx.user)
+  console.info(
+    'test use is authenticated middleware',
+    ctx.user,
+    'condition',
+    ctx.user !== null,
+  )
+
   return ctx.user !== null
 })
 
@@ -10,11 +16,17 @@ const isAdmin = rule({ cache: 'contextual' })(async (_, __, ctx) => {
   return ctx.user.roles.includes('admin')
 })
 
-export const permissions = shield({
-  Query: {
-    getUserById: isAuthenticated,
+export const permissions = shield(
+  {
+    Query: {
+      user: or(isAuthenticated, isAdmin),
+    },
+    Mutation: {
+      createUser: allow,
+    },
   },
-  Mutation: {
-    createUser: isAdmin,
+  {
+    allowExternalErrors: true,
+    debug: process.env.NODE_ENV !== 'production',
   },
-})
+)
