@@ -29,6 +29,7 @@ export const createSchema = async (): Promise<ApolloServer<MyContext>> => {
     resolvers: [join(__dirname, '/resolvers/**/**Resolvers.{ts,js}')],
     validate: { forbidUnknownValues: false },
     container: Container,
+    emitSchemaFile: true,
   })
 
   const server = new ApolloServer<MyContext>({

@@ -2,6 +2,15 @@
 
 E-Commerce Backend handles all request for E-Commerce Client.
 
+## Requirements
+This project connect to `MongoDb` database.
+
+You need to create a `.env` file and add the following lines:
+
+```
+MONGO_URI=<your-connection>
+```
+
 ## Setup
 
 ### Clone the repository
@@ -10,8 +19,8 @@ E-Commerce Backend handles all request for E-Commerce Client.
 git clone https://github.com/aogallo/ecommerce-backend
 ```
 
-### Install dependencies
 
+### Install dependencies
 Moving to the directory
 
 ```bash
@@ -38,7 +47,7 @@ In the project directory, you can run:
 Build the app for production environment. the `dist` directory will be created.
 
 ## yanr compile
-Compile the app with `tsc` 
+Compile the app with `tsc`
 
 ## yarn start
 Run the app for production environment.
@@ -56,7 +65,7 @@ Run de app with `tsc -w`
 Format the files with prettier and the `.prettierignore` and `.prettierrc.json` configuration file
 
 
-## yarn lint 
+## yarn lint
 Run `eslint` for the project.
 
 ## yarn prepare

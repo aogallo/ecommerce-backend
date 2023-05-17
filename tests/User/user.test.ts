@@ -8,9 +8,9 @@ beforeAll(async () => {
   await connectToMongodb()
   serverTest = await createSchema()
 })
-// afterAll(() => console.log('1 - afterAll'))
-// beforeEach(() => console.log('1 - beforeEach'))
-// afterEach(() => console.log('1 - afterEach'))
+afterAll(async () => {
+  await serverTest.stop()
+})
 
 describe('User unit test', () => {
   test('Retrieve User by Id', async () => {

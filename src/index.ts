@@ -9,7 +9,7 @@ import { getUser } from './utils/getUser'
 dotenv.config()
 
 async function main(): Promise<void> {
-  await connectToMongodb()
+  await connectToMongodb('prod')
   const server = await createSchema()
 
   await startStandaloneServer(server, {

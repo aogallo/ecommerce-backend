@@ -1,3 +1,4 @@
+import { Roles } from '@entities/Roles/Roles'
 import { Field, ID, ObjectType } from 'type-graphql'
 import {
   Column,
@@ -9,7 +10,7 @@ import {
 } from 'typeorm'
 
 @ObjectType()
-@Entity()
+@Entity('users')
 export class User {
   @Field((type) => ID)
   @ObjectIdColumn()
@@ -29,6 +30,10 @@ export class User {
 
   @Column()
   password!: string
+
+  @Field((type) => [Roles])
+  @Column((type) => ObjectId)
+  roles!: ObjectId[]
 
   @Field()
   @CreateDateColumn({ type: 'datetime' })
