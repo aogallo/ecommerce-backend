@@ -25,5 +25,5 @@ export class Roles {
 
   @Field()
   @UpdateDateColumn({ type: 'datetime' })
-  updateAt!: Date
+  updateAt!: string
 }

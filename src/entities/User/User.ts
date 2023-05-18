@@ -33,6 +33,8 @@ export class User {
 
   @Field((type) => [Roles])
   @Column((type) => ObjectId)
+  @Field((type) => [Roles], { nullable: true })
+  @Column({ array: true })
   roles!: ObjectId[]
 
   @Field()
