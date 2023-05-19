@@ -1,47 +1,43 @@
-import { Roles } from '@entities/Roles/Roles'
-import { Field, ID, ObjectType } from 'type-graphql'
+import { Types } from 'mongoose'
 import {
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ObjectId,
-  Entity,
-  ObjectIdColumn,
-} from 'typeorm'
+  type Ref,
+  getModelForClass,
+  modelOptions,
+  prop,
+} from '@typegoose/typegoose'
+import { Field, ID, ObjectType } from 'type-graphql'
 
+import { Role } from '@entities/Roles/Roles'
+import TimestampsFields from '@src/globalTypes/TimestampsFields'
+
+@modelOptions({
+  schemaOptions: {
+    timestamps: true,
+  },
+})
 @ObjectType()
-@Entity('users')
-export class User {
+export class User extends TimestampsFields {
   @Field((type) => ID)
-  @ObjectIdColumn()
-  readonly id!: ObjectId
+  id!: Types.ObjectId
 
   @Field()
-  @Column('text', { unique: true })
+  @prop()
   username!: string
 
   @Field()
-  @Column()
+  @prop()
   name!: string
 
   @Field()
-  @Column('text', { unique: true })
+  @prop()
   email!: string
 
-  @Column()
+  @prop()
   password!: string
 
-  @Field((type) => [Roles])
-  @Column((type) => ObjectId)
-  @Field((type) => [Roles], { nullable: true })
-  @Column({ array: true })
-  roles!: ObjectId[]
-
-  @Field()
-  @CreateDateColumn({ type: 'datetime' })
-  createAt!: string
-
-  @Field()
-  @UpdateDateColumn({ type: 'datetime' })
-  updateAt!: string
+  @Field((type) => [Role], { nullable: true })
+  @prop({ ref: () => Role })
+  roles!: Array<Ref<Role>>
 }
+
+export const UserModel = getModelForClass(User)

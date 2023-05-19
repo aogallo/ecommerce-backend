@@ -1,29 +1,21 @@
-import { Field, ID, ObjectType } from 'type-graphql'
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ObjectId,
-  ObjectIdColumn,
-  UpdateDateColumn,
-} from 'typeorm'
+import { Field, GraphQLISODateTime, ID, ObjectType } from 'type-graphql'
+import { Types } from 'mongoose'
+import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose'
+import TimestampsFields from '@src/globalTypes/TimestampsFields'
 
+@modelOptions({
+  schemaOptions: {
+    timestamps: true,
+  },
+})
 @ObjectType()
-@Entity('roles')
-export class Roles {
+export class Role extends TimestampsFields {
   @Field((type) => ID)
-  @ObjectIdColumn()
-  id!: ObjectId
+  id!: Types.ObjectId
 
   @Field()
-  @Column({ unique: true })
+  @prop({ unique: true })
   name!: string
-
-  @Field()
-  @CreateDateColumn({ type: 'datetime' })
-  createAt!: string
-
-  @Field()
-  @UpdateDateColumn({ type: 'datetime' })
-  updateAt!: string
 }
+
+export const RoleModel = getModelForClass(Role)
