@@ -1,4 +1,4 @@
-import { Field, GraphQLISODateTime, ID, ObjectType } from 'type-graphql'
+import { Field, ID, ObjectType } from 'type-graphql'
 import { Types } from 'mongoose'
 import { getModelForClass, modelOptions, prop } from '@typegoose/typegoose'
 import TimestampsFields from '@src/globalTypes/TimestampsFields'
