@@ -12,7 +12,7 @@ export class LoginResolvers {
   async login(
     @Arg('login') { username, password }: LoginInput,
   ): Promise<LoginResponse> {
-    const user = await UserModel.findOne({ username })
+    const user = await UserModel.findOne({ username }).populate('roles')
 
     console.log(user)
     console.log(username, password)
@@ -24,9 +24,7 @@ export class LoginResolvers {
       })
     }
 
-    const isMatch = await comparePassword(password, user!.password)
-
-    console.log('is match', isMatch)
+    const isMatch = await comparePassword(password, user?.password ?? '')
 
     if (!isMatch) {
       CustomError({
@@ -39,14 +37,14 @@ export class LoginResolvers {
 
     return {
       token,
-      id: user!.id,
-      updatedAt: user!.updatedAt,
-      password: user!.password,
-      createdAt: user!.createdAt,
-      name: user!.name,
-      email: user!.email,
-      roles: user!.roles,
-      username: user!.username,
+      id: user?.id,
+      updatedAt: user?.updatedAt ?? '',
+      password: user?.password ?? '',
+      createdAt: user?.createdAt ?? '',
+      name: user?.name ?? '',
+      email: user?.email ?? '',
+      roles: user?.roles ?? [],
+      username: user?.username ?? '',
     }
   }
 }

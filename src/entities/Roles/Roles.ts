@@ -10,7 +10,7 @@ import TimestampsFields from '@src/globalTypes/TimestampsFields'
 })
 @ObjectType()
 export class Role extends TimestampsFields {
-  @Field((type) => ID)
+  @Field(() => ID)
   id!: Types.ObjectId
 
   @Field()

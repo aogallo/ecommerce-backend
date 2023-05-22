@@ -4,7 +4,7 @@ import {
   getModelForClass,
   modelOptions,
   prop,
-  pre,
+  post,
 } from '@typegoose/typegoose'
 import { Field, ID, ObjectType } from 'type-graphql'
 
@@ -17,12 +17,12 @@ import { encriptPassword } from '@src/utils/PasswordUtil'
     timestamps: true,
   },
 })
-@pre<User>('save', async function () {
+@post<User>('save', async function () {
   this.password = await encriptPassword(this.password)
 })
 @ObjectType()
 export class User extends TimestampsFields {
-  @Field((type) => ID)
+  @Field(() => ID)
   id!: Types.ObjectId
 
   @Field()
@@ -40,7 +40,7 @@ export class User extends TimestampsFields {
   @prop({ required: true })
   password!: string
 
-  @Field((type) => [Role], { nullable: true })
+  @Field(() => [Role], { nullable: true })
   @prop({ ref: () => Role })
   roles!: Array<Ref<Role>>
 }

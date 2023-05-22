@@ -5,19 +5,19 @@ import { RoleModel } from '@entities/Roles/Roles'
 import { UserInput } from '@resolvers/types/UserTypes'
 import CustomError from '@src/utils/CustomError'
 
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class UserResolver {
-  @Query((returns) => [User], { nullable: 'itemsAndList' })
+  @Query(() => [User], { nullable: 'itemsAndList' })
   async users(): Promise<User[]> {
     return await UserModel.find({}).populate('roles')
   }
 
-  @Query((returns) => User, { nullable: true })
+  @Query(() => User, { nullable: true })
   async user(@Arg('id') id: string): Promise<User | null> {
-    return null
+    return await UserModel.findOne({ id }).populate('roles')
   }
 
-  @Mutation((returns) => User, { nullable: true })
+  @Mutation(() => User, { nullable: true })
   async createUser(@Arg('user') user: UserInput): Promise<User | null> {
     try {
       const roleAdmin = await RoleModel.findOne({ name: 'admin' })
@@ -25,7 +25,6 @@ export default class UserResolver {
         ...user,
         roles: [roleAdmin?.id],
       })
-      console.log('model', newModel)
       const newUser = await newModel.save()
       return await newUser.populate('roles')
     } catch (error) {

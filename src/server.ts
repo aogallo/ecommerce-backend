@@ -4,7 +4,6 @@ import { ApolloServer } from '@apollo/server'
 import { applyMiddleware } from 'graphql-middleware'
 import { buildTypeDefsAndResolvers } from 'type-graphql'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { Container } from 'typedi'
 
 import { permissions } from '@permissions/permissions'
 

@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { startStandaloneServer } from '@apollo/server/standalone'
 
-import { connect, Types } from 'mongoose'
+import { connect } from 'mongoose'
 import dotenv from 'dotenv'
 import { createSchema } from './server'
 import { getUser } from './utils/getUser'
@@ -10,7 +10,8 @@ dotenv.config()
 
 async function main(): Promise<void> {
   // await connectToMongodb('prod')
-  const mongoose = await connect(process.env.MONGO_URI!)
+  // const mongoose = await connect(process.env.MONGO_URI!)
+  await connect(process.env.MONGO_URI ?? '')
 
   // clean and seed database with some data
   // await mongoose.connection.db.dropDatabase()
