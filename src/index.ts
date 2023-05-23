@@ -11,7 +11,7 @@ dotenv.config()
 async function main(): Promise<void> {
   // await connectToMongodb('prod')
   // const mongoose = await connect(process.env.MONGO_URI!)
-  await connect(process.env.MONGO_URI ?? '')
+  await connect(process.env.MONGO_URI ?? '', { dbName: 'sandbox' })
 
   // clean and seed database with some data
   // await mongoose.connection.db.dropDatabase()

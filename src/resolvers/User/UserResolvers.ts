@@ -14,7 +14,7 @@ export default class UserResolver {
 
   @Query(() => User, { nullable: true })
   async user(@Arg('id') id: string): Promise<User | null> {
-    return await UserModel.findOne({ id }).populate('roles')
+    return await UserModel.findById(id).populate('roles')
   }
 
   @Mutation(() => User, { nullable: true })

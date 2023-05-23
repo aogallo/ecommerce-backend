@@ -17,7 +17,7 @@
     "test": "node -r dotenv/config $(which jest)"
   },
   "dependencies": {
-    "@apollo/server": "^4.6.0",
+    "@apollo/server": "^4.7.1",
     "@graphql-tools/load-files": "^6.6.1",
     "@graphql-tools/merge": "^8.4.0",
     "@graphql-tools/schema": "^9.0.17",
