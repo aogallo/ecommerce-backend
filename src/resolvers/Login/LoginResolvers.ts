@@ -8,14 +8,11 @@ import { createToken } from '@src/utils/TokenUtil'
 
 @Resolver()
 export class LoginResolvers {
-  @Mutation((types) => LoginResponse)
+  @Mutation(() => LoginResponse)
   async login(
     @Arg('login') { username, password }: LoginInput,
   ): Promise<LoginResponse> {
     const user = await UserModel.findOne({ username }).populate('roles')
-
-    console.log(user)
-    console.log(username, password)
 
     if (user === undefined || user === null) {
       CustomError({

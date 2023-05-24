@@ -6,12 +6,8 @@ export interface GraphQLResponseTest {
   body: {
     kind: 'single'
     singleResult: {
-      errors?: Record<string, unknown>
-      data?:
-        | Record<string, unknown>
-        | {
-            users?: [User]
-          }
+      errors?: Record<string, unknown>[]
+      data?: Record<string, Record<string, unknown> | User[]>
     }
   }
 }
