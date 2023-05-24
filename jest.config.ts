@@ -5,11 +5,13 @@ import { type JestConfigWithTsJest, pathsToModuleNameMapper } from 'ts-jest'
 const jestConfig: JestConfigWithTsJest = {
   detectOpenHandles: true,
   collectCoverage: true,
+  verbose: true,
   coveragePathIgnorePatterns: ['/node_modules/'],
   coverageProvider: 'v8',
   // extensionsToTreatAsEsm: ['.ts'],
   // modulePaths: [compilerOptions.baseUrl],
   // moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+  // setupFilesAfterEnv: ['<rootDir>/tests/setup-jest.ts'],
   moduleNameMapper: {
     '@resolvers/(.*)$': '<rootDir>/src/resolvers/$1',
     '@permissions/(.*)$': '<rootDir>/src/permissions/$1',

@@ -1,40 +1,36 @@
-import { User } from '@entities/User/User'
-import { Arg, Mutation, InputType, Query, Field, Resolver } from 'type-graphql'
-import { Repository } from 'typeorm'
-import { InjectRepository } from 'typeorm-typedi-extensions'
-import { Service } from 'typedi'
+import { Arg, Mutation, Query, Resolver } from 'type-graphql'
 
-@InputType()
-class UserInput implements Partial<User> {
-  @Field()
-  username!: string
+import { UserModel, User } from '@entities/User/User'
+import { RoleModel } from '@entities/Roles/Roles'
+import { UserInput } from '@resolvers/types/UserTypes'
+import CustomError from '@src/utils/CustomError'
 
-  @Field()
-  name!: string
-
-  @Field()
-  email!: string
-
-  @Field()
-  password!: string
-}
-
-@Service()
-@Resolver((of) => User)
+@Resolver(() => User)
 export default class UserResolver {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
-
-  @Query((returns) => String)
-  user(): string {
-    return 'allan test resolver'
+  @Query(() => [User], { nullable: 'itemsAndList' })
+  async users(): Promise<User[]> {
+    return await UserModel.find({}).populate('roles')
   }
 
-  @Mutation((returns) => User)
-  async createUser(@Arg('user') user: UserInput): Promise<User> {
-    console.log('data', user)
-    const newUser = this.userRepository.create(user)
-    return await this.userRepository.save(newUser)
+  @Query(() => User, { nullable: true })
+  async user(@Arg('id') id: string): Promise<User | null> {
+    return await UserModel.findById(id).populate('roles')
+  }
+
+  @Mutation(() => User, { nullable: true })
+  async createUser(@Arg('user') user: UserInput): Promise<User | null> {
+    try {
+      const roleAdmin = await RoleModel.findOne({ name: 'admin' })
+      const newModel = await UserModel.create({
+        ...user,
+        roles: [roleAdmin?.id],
+      })
+      const newUser = await newModel.save()
+      return await newUser.populate('roles')
+    } catch (error) {
+      console.log('erro', error)
+      CustomError({ code: 'FAILDTODOOPERATION' })
+    }
+    return null
   }
 }

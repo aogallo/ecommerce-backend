@@ -4,7 +4,6 @@ import { ApolloServer } from '@apollo/server'
 import { applyMiddleware } from 'graphql-middleware'
 import { buildTypeDefsAndResolvers } from 'type-graphql'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { Container } from 'typedi'
 
 import { permissions } from '@permissions/permissions'
 
@@ -28,7 +27,9 @@ export const createSchema = async (): Promise<ApolloServer<MyContext>> => {
   const { typeDefs, resolvers } = await buildTypeDefsAndResolvers({
     resolvers: [join(__dirname, '/resolvers/**/**Resolvers.{ts,js}')],
     validate: { forbidUnknownValues: false },
-    container: Container,
+    // container: Container,
+    emitSchemaFile: true,
+    dateScalarMode: 'isoDate',
   })
 
   const server = new ApolloServer<MyContext>({
