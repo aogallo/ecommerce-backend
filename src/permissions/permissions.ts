@@ -19,11 +19,13 @@ const isAdmin = rule({ cache: 'contextual' })(async (_, __, ctx) => {
 export const permissions = shield(
   {
     Query: {
-      user: allow, // or(isAuthenticated, isAdmin),
+      user: isAdmin,
+      users: isAdmin,
     },
-    // Mutation: {
-    //   createUser: allow,
-    // },
+    Mutation: {
+      createUser: allow,
+      createRole: isAdmin,
+    },
   },
   {
     allowExternalErrors: true,
