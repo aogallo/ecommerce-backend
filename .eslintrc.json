@@ -55,12 +55,12 @@
             "./src/resolvers"
           ],
           [
-            "@graphqlTypes",
-            "./src/graphqlTypes"
-          ],
-          [
             "@permissions",
             "./src/permissions"
+          ],
+          [
+            "@entities",
+            "./src/entities"
           ],
           [
             "@src",

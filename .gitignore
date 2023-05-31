@@ -8,3 +8,5 @@ coverage/
 *.log
 *-backup*
 
+
+schema.gql
