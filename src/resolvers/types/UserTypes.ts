@@ -1,5 +1,6 @@
 import { Field, InputType } from 'type-graphql'
-import { type User } from '@entities/User/User'
+
+import type User from '@src/globalTypes/User'
 
 @InputType()
 export class UserInput implements Partial<User> {

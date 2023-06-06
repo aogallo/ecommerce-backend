@@ -1,27 +1,11 @@
 import { Types } from 'mongoose'
-import {
-  type Ref,
-  getModelForClass,
-  modelOptions,
-  prop,
-  post,
-} from '@typegoose/typegoose'
+import TimestampsFields from './TimestampsFields'
 import { Field, ID, ObjectType } from 'type-graphql'
-
+import { type Ref, prop } from '@typegoose/typegoose'
 import { Role } from '@entities/Roles/Roles'
-import TimestampsFields from '@src/globalTypes/TimestampsFields'
-import { encriptPassword } from '@src/utils/PasswordUtil'
 
-@modelOptions({
-  schemaOptions: {
-    timestamps: true,
-  },
-})
-@post<User>('save', async function () {
-  this.password = await encriptPassword(this.password)
-})
 @ObjectType()
-export class User extends TimestampsFields {
+export default class User extends TimestampsFields {
   @Field(() => ID)
   id!: Types.ObjectId
 
@@ -44,5 +28,3 @@ export class User extends TimestampsFields {
   @prop({ ref: () => Role })
   roles!: Array<Ref<Role>>
 }
-
-export const UserModel = getModelForClass(User)
