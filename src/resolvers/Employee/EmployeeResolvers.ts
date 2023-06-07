@@ -18,7 +18,9 @@ export default class EmployeeResolver {
   }
 
   @Mutation(() => Employee, { nullable: true })
-  async createEmployee(@Arg('user') user: UserInput): Promise<Employee | null> {
+  async createEmployee(
+    @Arg('employee') user: UserInput,
+  ): Promise<Employee | null> {
     try {
       const roleAdmin = await RoleModel.findOne({ name: 'admin' })
       const newModel = await EmployeeModel.create({
