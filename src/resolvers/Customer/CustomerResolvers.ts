@@ -8,7 +8,7 @@ import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql'
 @Resolver(() => Customer)
 export default class CustomerResolvers {
   @Query((returns) => [Customer], { nullable: 'itemsAndList' })
-  async test(): Promise<Customer[]> {
+  async customers(): Promise<Customer[]> {
     return await CustomerModel.find({}).populate('roles')
   }
 
@@ -29,10 +29,16 @@ export default class CustomerResolvers {
         ...user,
         roles: [customerRole?.id],
       })
+
       const newCustomer = await newModel.save()
+
       return await newCustomer.populate('roles')
     } catch (error) {
-      ctx.logger?.log('error', 'Error to create customer %s', JSON.stringify(error))
+      ctx.logger?.log(
+        'error',
+        'Error to create customer %s',
+        JSON.stringify(error),
+      )
       CustomError({ code: 'FAILDTODOOPERATION' })
     }
     return null

@@ -26,5 +26,5 @@ export default class User extends TimestampsFields {
 
   @Field(() => [Role], { nullable: true })
   @prop({ ref: () => Role })
-  roles!: Array<Ref<Role>>
+  roles?: Array<Ref<Role>>
 }

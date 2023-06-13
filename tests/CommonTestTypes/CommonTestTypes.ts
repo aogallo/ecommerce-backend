@@ -1,5 +1,6 @@
 import type { HTTPGraphQLHead } from '@apollo/server'
-import { type User } from '@entities/User/User'
+import { Customer } from '@entities/Customer/Customer'
+import { Employee } from '@entities/Employee/Employee'
 
 export interface GraphQLResponseTest {
   http: HTTPGraphQLHead
@@ -7,7 +8,7 @@ export interface GraphQLResponseTest {
     kind: 'single'
     singleResult: {
       errors?: Record<string, unknown>[]
-      data?: Record<string, Record<string, unknown> | User[]>
+      data?: Record<string, Record<string, unknown> | Employee[] | Customer[]>
     }
   }
 }
