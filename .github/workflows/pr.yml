@@ -17,11 +17,11 @@ jobs:
           repo-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
           assignees: ${{ secrets.DEFAULT_ASSIGNEE }}
 
-  assign-project-pr:
-    runs-on: ubuntu-latest
-    name: Assign to Ecommerce Project
-    steps:
-      - uses: actions/add-to-project@RELEASE_VERSION
-        with:
-          project-url: https://github.com/users/aogallo/projects/2
-          github-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
+  # assign-project-pr:
+  #   runs-on: ubuntu-latest
+  #   name: Assign to Ecommerce Project
+  #   steps:
+  #     - uses: actions/add-to-project@RELEASE_VERSION
+  #       with:
+  #         project-url: https://github.com/users/aogallo/projects/2
+  #         github-token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}

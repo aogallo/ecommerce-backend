@@ -27,7 +27,8 @@
           "@resolvers": "./src/resolvers",
           "@entities": "./src/entities",
           "@src": "./src",
-          "@permissions": "./src/permissions"
+          "@permissions": "./src/permissions",
+          "@tests": "./tests/"
         }
       }
     ]

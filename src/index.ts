@@ -6,6 +6,8 @@ import dotenv from 'dotenv'
 import { createSchema } from './server'
 import { getUser } from './utils/getUser'
 
+import { logger } from '@src/utils/Logger'
+
 dotenv.config()
 
 async function main(): Promise<void> {
@@ -21,6 +23,7 @@ async function main(): Promise<void> {
     listen: { port: 4000 },
     context: async ({ req }) => ({
       user: getUser(req),
+      logger,
     }),
   })
 }

@@ -6,6 +6,7 @@ import { buildTypeDefsAndResolvers } from 'type-graphql'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 
 import { permissions } from '@permissions/permissions'
+import { type Logger } from 'winston'
 
 interface UserInformation {
   roles: string[]
@@ -21,6 +22,7 @@ export interface UserToken {
 
 export interface MyContext {
   user?: Omit<UserToken, 'userInfo'> & UserInformation
+  logger?: Logger
 }
 
 export const createSchema = async (): Promise<ApolloServer<MyContext>> => {

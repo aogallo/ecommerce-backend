@@ -1,7 +1,8 @@
 import { type ApolloServer } from '@apollo/server'
-import { type MyContext, createSchema } from '@src/server'
 import { connect, type Mongoose } from 'mongoose'
-import type { GraphQLResponseTest } from '../CommonTestTypes/CommonTestTypes'
+
+import { type MyContext, createSchema } from '@src/server'
+import type { GraphQLResponseTest } from '@tests/CommonTestTypes/CommonTestTypes'
 import { RoleModel } from '@entities/Roles/Roles'
 
 let serverTest: ApolloServer<MyContext>
@@ -24,14 +25,8 @@ afterAll(async () => {
   await connection.disconnect()
 })
 
-// describe('Test', () => {
-//   test('me', () => {
-//     console.log('success')
-//   })
-// })
-
-describe('User Unit Test', () => {
-  test('Create a User', async () => {
+describe('Employee Unit Test', () => {
+  test('Create a Employee', async () => {
     const newUser = {
       email: 'rootTest@gmail.com',
       name: 'root test',
@@ -40,25 +35,25 @@ describe('User Unit Test', () => {
     }
 
     const response: GraphQLResponseTest = (await serverTest.executeOperation({
-      query: `
-        mutation CreateUser($user: UserInput!) {
-          createUser(user: $user) {
+      query: `#graphql
+        mutation CreateEmployee ($employee: UserInput!) {
+          createEmployee(employee: $employee) {
+            createdAt
+            updatedAt
             id
             username
             name
             email
             roles {
-              id
-              name
               createdAt
               updatedAt
+              id
+              name
             }
-            createdAt
-            updatedAt
           }
         }
       `,
-      variables: { user: newUser },
+      variables: { employee: newUser },
     })) as GraphQLResponseTest
 
     newUser.email = 'test@gmail.com'
@@ -66,9 +61,9 @@ describe('User Unit Test', () => {
     newUser.name = 'Test'
 
     const responseUserTwo = (await serverTest.executeOperation({
-      query: `
-        mutation CreateUser($user: UserInput!) {
-          createUser(user: $user) {
+      query: `#graphql
+        mutation CreateEmployee($employee: UserInput!) {
+          createEmployee(employee: $employee) {
             id
             username
             name
@@ -84,12 +79,12 @@ describe('User Unit Test', () => {
           }
         }
       `,
-      variables: { user: newUser },
+      variables: { employee: newUser },
     })) as GraphQLResponseTest
 
     expect(responseUserTwo.body.singleResult.errors).toBeUndefined()
     expect(responseUserTwo.body.singleResult.data).toHaveProperty(
-      'createUser.email',
+      'createEmployee.email',
       newUser.email,
     )
   })
@@ -97,16 +92,16 @@ describe('User Unit Test', () => {
   test('Retrieve User by Id', async () => {
     const response: GraphQLResponseTest = (await serverTest.executeOperation({
       query:
-        'query Query($id: String!) { user(id: $id) { id username name email  } }',
+        'query Query($id: String!) { employee(id: $id) { id username name email  } }',
       variables: { id: '646bb061d0e3c346d5e58370' },
     })) as GraphQLResponseTest
 
     expect(response.body.singleResult.errors).toBeUndefined()
   })
 
-  test('Retrieve all Users', async () => {
+  test('Retrieve all Employees', async () => {
     const response = (await serverTest.executeOperation({
-      query: 'query Query { users { id username name email  } }',
+      query: 'query Query { employees { id username name email  } }',
     })) as GraphQLResponseTest
 
     expect(response.body.singleResult.errors).toBeUndefined()
@@ -115,7 +110,7 @@ describe('User Unit Test', () => {
       response.body.singleResult.data != null ||
       response.body.singleResult.data !== undefined
     ) {
-      const users = response.body.singleResult.data.users
+      const users = response.body.singleResult.data.employees
       expect(users.length).toBeGreaterThan(0)
     }
   })

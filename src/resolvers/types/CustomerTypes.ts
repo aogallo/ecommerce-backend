@@ -3,7 +3,7 @@ import { Field, InputType } from 'type-graphql'
 import type User from '@src/globalTypes/User'
 
 @InputType()
-export class UserInput implements Partial<User> {
+export class CustomerInput {
   @Field()
   username!: string
 
@@ -15,4 +15,7 @@ export class UserInput implements Partial<User> {
 
   @Field()
   password!: string
+
+  @Field()
+  deliveryAddress!: string
 }

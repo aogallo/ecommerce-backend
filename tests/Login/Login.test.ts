@@ -1,10 +1,12 @@
 import { type ApolloServer } from '@apollo/server'
-import { type MyContext, createSchema } from '@src/server'
 import { connect, type Mongoose } from 'mongoose'
-import type { GraphQLResponseTest } from '../CommonTestTypes/CommonTestTypes'
+
+import { type MyContext, createSchema } from '@src/server'
 import { RoleModel } from '@entities/Roles/Roles'
-import { graphql } from 'graphql'
-import { UserModel } from '@entities/User/User'
+import type { GraphQLResponseTest } from '@tests/CommonTestTypes/CommonTestTypes'
+import { EmployeeModel } from '@entities/Employee/Employee'
+import { CustomerModel } from '@entities/Customer/Customer'
+
 let serverTest: ApolloServer<MyContext>
 
 let connection: Mongoose
@@ -25,8 +27,29 @@ beforeAll(async () => {
     password: 'testpassword',
   }
 
-  const user = await UserModel.create({ ...userInput, roles: [roleTest.id] })
+  const user = await EmployeeModel.create({
+    ...userInput,
+    roles: [roleTest.id],
+  })
+
   await user.save()
+
+  const customerRole = await RoleModel.create({ name: 'customer' })
+  await customerRole.save()
+
+  const customerInput = {
+    username: 'customer',
+    name: 'Customer Test',
+    email: 'customer-test@gmail.com',
+    password: 'testpassword',
+    deliveryAddress: 'Test City',
+  }
+
+  const customer = await CustomerModel.create({
+    ...customerInput,
+  })
+
+  await customer.save()
 
   serverTest = await createSchema()
 })

@@ -1,7 +1,7 @@
 import { Types } from 'mongoose'
 import { Field, InputType, ObjectType } from 'type-graphql'
 
-import { User } from '@entities/User/User'
+import User from '@src/globalTypes/User'
 
 @InputType()
 export class LoginInput {

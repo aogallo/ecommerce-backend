@@ -1,11 +1,11 @@
 import { sign } from 'jsonwebtoken'
 
-import { type User } from '@entities/User/User'
+import { type Employee } from '@entities/Employee/Employee'
 
 const DEV_EXPIRES_IN = '15d'
 const PROD_EXPIRES_IN = '15m'
 
-export const createToken = (user: User): string => {
+export const createToken = (user: Employee): string => {
   const expiresIn =
     process.env.NODE_ENV === 'prod' ? PROD_EXPIRES_IN : DEV_EXPIRES_IN
   return sign(
