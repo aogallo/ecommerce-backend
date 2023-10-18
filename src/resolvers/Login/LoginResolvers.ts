@@ -1,10 +1,11 @@
 import { Arg, Mutation, Resolver } from 'type-graphql'
 
-import { type User, UserModel } from '@entities/User/User'
 import { LoginInput, LoginResponse } from '@resolvers/types/LoginTypes'
 import CustomError from '@src/utils/CustomError'
 import { comparePassword } from '@src/utils/PasswordUtil'
 import { createToken } from '@src/utils/TokenUtil'
+import { type Employee, EmployeeModel } from '@entities/Employee/Employee'
+import { CustomerModel } from '@entities/Customer/Customer'
 
 @Resolver()
 export class LoginResolvers {
@@ -12,13 +13,10 @@ export class LoginResolvers {
   async login(
     @Arg('login') { username, password }: LoginInput,
   ): Promise<LoginResponse> {
-    const user = await UserModel.findOne({ username }).populate('roles')
+    let user = await EmployeeModel.findOne({ username }).populate('roles')
 
     if (user === undefined || user === null) {
-      CustomError({
-        code: 'AUTHENTICATIONFAILD',
-        message: 'Usuario o contraseña incorrectos',
-      })
+      user = await CustomerModel.findOne({ username }).populate('roles')
     }
 
     const isMatch = await comparePassword(password, user?.password ?? '')
@@ -30,7 +28,7 @@ export class LoginResolvers {
       })
     }
 
-    const token = createToken(user as User)
+    const token = createToken(user as Employee)
 
     return {
       token,

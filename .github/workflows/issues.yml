@@ -29,12 +29,12 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  assign-project-issue:
-    runs-on: ubuntu-latest
-    name: Assign to Ecommerce Project
-    steps:
-      - name: Assign NEW issue to the Ecommerce Project
-        uses: srggrs/assign-one-project-github-action@1.2.1
-        if: github.event.action == 'opened'
-        with:
-          project: 'https://github.com/users/aogallo/projects/2'
+  # assign-project-issue:
+  #   runs-on: ubuntu-latest
+  #   name: Assign to Ecommerce Project
+  #   steps:
+  #     - name: Assign NEW issue to the Ecommerce Project
+  #       uses: srggrs/assign-one-project-github-action@1.2.1
+  #       if: github.event.action == 'opened'
+  #       with:
+  #         project: 'https://github.com/users/aogallo/projects/2'

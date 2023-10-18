@@ -11,19 +11,20 @@ const isAuthenticated = rule({ cache: 'contextual' })(async (_, __, ctx) => {
   return ctx.user !== null
 })
 
-const isAdmin = rule({ cache: 'contextual' })(async (_, __, ctx) => {
+export const isAdmin = rule({ cache: 'contextual' })(async (_, __, ctx) => {
   console.info('is admin middleware', ctx.user)
   return ctx.user.roles.includes('admin')
 })
 
 export const permissions = shield(
   {
-    Query: {
-      user: isAdmin,
-      users: isAdmin,
-    },
+    // Query: {
+    //   user: isAdmin,
+    // users: isAdmin,
+    // },
     Mutation: {
-      createUser: allow,
+      createEmployee: allow,
+      createCustomer: allow,
       createRole: isAdmin,
     },
   },
